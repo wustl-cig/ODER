@@ -1,0 +1,8 @@
+numpy==1.19.2
+torch==1.7.0
+scikit-image==0.17.2
+torchvision==0.8.0
+tqdm>=4.52
+hydra-core==1.0.6
+imageio
+opencv-python

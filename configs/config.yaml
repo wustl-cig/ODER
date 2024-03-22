@@ -1,0 +1,55 @@
+# configures the working direction of hydra.
+# If using relative paths, the working directory should be the root folder of ODER.
+hydra:
+  run:
+    dir: '.'
+
+model_type: 'CT'
+
+CT:
+  model_type: 'CT' 
+  seed: 128
+  device: cuda
+  set_mode: train # test/train
+  # the root path where to run/store code/outcomes
+  root_path: None 
+  save_path: None
+  # the code path where to copy the running code
+  code_path: None 
+  # the data path
+  test_datapath : ./data/CT_IMGS.mat
+  # number of GPUs used for training
+  multiGPU: false
+  num_gpus: 1
+  # Parameters for the forward model at inference (testing)  
+  fwd_test: 
+    IMG_Patch: 512
+    numAngles: 90
+    batchAngles: 30
+    inputSNR: 50
+  # CNN (Prior) model/structure
+  cnn_model: 
+    network: tinyUnet
+    depth: 5
+    n_channels: 32
+    image_channels : 1
+    kernel_size: 3
+    act_fun: PReLU
+    norm_fun: GroupNorm
+    padding: 0
+  # Unfolding setup (online RED)
+  RED_model:
+    num_iter: 180
+    mode: ODER # ODER/RED(DEQ)
+    gamma_inti: 0.001
+    tau_inti: 
+    fixpot_tol: 1e-4
+    solver: Nesterov
+  # The pre-trained checkpoint
+  inference:
+    load_path: 
+  # Data to test
+  testing:
+    num_volum: 2
+    num_test: 0.2
+    batch_size: 1
